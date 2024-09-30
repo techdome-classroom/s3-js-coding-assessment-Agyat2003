@@ -3,26 +3,20 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    const dictionary = {
-        "(":")",
-        "{":"}",
-        "[":"]"
-        }
-    const stack = [];
-    for (let i =0; i< s.length; i++) {
-        let currentBracket = s[i]; 
-        let lastBracket = stack[stack.length-1]; 
-        if (currentBracket in dictionary) {
-            stack.push(dictionary[currentBracket])
-            continue;
-        }
-        if (currentBracket === lastBracket ) {
-            stack.pop();
-            continue;
-        }
-        return false;
+    let n = s.length;
+    if (n % 2 !== 0) return false;
+
+    let stack = [];
+    
+    for (let i = 0; i < n; i++) {
+        let c = s[i];
+        if (c === '(') stack.push(')');
+        else if (c === '[') stack.push(']');
+        else if (c === '{') stack.push('}');
+        else if (stack.length === 0 || c !== stack.pop()) return false;
     }
-    return !stack.length;
+
+    return stack.length === 0;
 };
 
 module.exports = { isValid };
